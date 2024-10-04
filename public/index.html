@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Web Component</title>
+  <script>
+    let greeting = null;
+
+    window.onload = () => {
+      document.getElementById('name-input').addEventListener('keyup', (e) => {
+        document.getElementById('greeter-bot').setAttribute('greeting', e.target.value);
+      }) 
+
+      attachShadowDomEl()
+    }
+
+    function attachShadowDomEl() {
+      const el = document.createElement('div');
+      const shadowRoot = el.attachShadow({ mode: 'open'});
+      shadowRoot.innerHTML = '<p>Shadow DOM p text</p>';
+
+      const container = document.querySelector('#container');
+      container.appendChild(el);
+    }
+  </script>
+  <script type="text/javascript" src="./GreeterBot.js"></script>
+  <script type="text/javascript" src="./ShadowText.js"></script>
+  <style>
+    /* this affects shadow DOM */
+    /* * {
+      color: green;
+    } */
+
+    p {
+      color: red;
+    }
+
+    greeter-bot {
+      font-size: 8em;
+    }
+  </style>
+</head>
+<body> 
+  <input type="text" id="name-input"/>
+  <greeter-bot id="greeter-bot"></greeter-bot>
+  <p>Light DOM p text</p>
+  <div id="container"></div>
+  <shadow-text styleSheet="./shadowStyle.css">
+    <p>Child Text</p>
+  </shadow-text>
+</body>
+</html>
